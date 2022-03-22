@@ -89,7 +89,18 @@ Insert into shopfast_product
 select product_id,product_name,product_sub_Category,product_category
 from shopfast
 
-insert into shopfast_customer
+Insert into shopfast_customer
 select customer_id,customer_name,customer_Surname,customer_city,customer_email
 from shopfast
+
+-- Data Validation
+
+select 
+	case 
+		when s.shipping_id = ss.shipping_id And s.shipped_date = ss.shipping_date and s.shipping_method = ss.shipping_method then 'Correct'
+		else 'Incorrect'
+	End As Data_Valiadtion
+from shopfast s
+join shopfast_shipping ss
+on s.shipping_id = ss.shipping_id
 
