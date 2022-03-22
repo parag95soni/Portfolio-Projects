@@ -1,0 +1,95 @@
+Use PortfolioProject
+
+-- Create Table
+
+Create Table Shopfast
+(
+order_id int,
+payment_description varchar(50),
+customer_email nvarchar(255),
+product_name nvarchar(255),
+shipping_id int,
+order_date date,
+shipped_date date,
+shipping_method varchar(50),
+sale_price int,
+customer_id int,
+product_id int,
+customer_name nvarchar(255),
+customer_surname nvarchar(255),
+customer_city nvarchar(255),
+product_category varchar(50),
+product_sub_category varchar(50)
+)
+
+-- Insert Data into table
+
+Insert Into Shopfast
+values
+(1456,'Credit Card','jee@gmail.com','Indigo Diva Top', 12 ,'2020-07-12','2020-07-15', 'air' , 20, 3451, 124 ,'Jee', 'Dana', 'New York', 'Ladies Fashion', 'Tops'),
+(1457,'Debit Card' ,'dprice@msn.com','Grey Crew Neck Top', 13, '2020-07-12','2020-07-15','road', 15, 3121, 125, 'David', 'Price', 'Houston', 'Mens Fashion', 'Tops'),
+(1458,'Credit Card','staikos@optonline.net','Sierra Blue Jeans',14,'2020-07-12','2020-07-15','road',25,1254,126,'Sean','Taikos', 'Miami','Ladies Fashion', 'Bottoms'),
+(1459,'Credit Card','psharpe@mac.com','Vio Bomber Jacket',15,'2020-07-12','2020-07-15','rail',30,2312,127,'Phillip','Sharpe','Los Angeles','Mens Fashion','Jackets/Coats'),
+(1460,'Cash on Delivery','andale@yahoo.com','Blue Ivy Sneaker',16,'2020-07-12','2020-07-15','road',28,3277,128,'Andy','Ale','San Francisco','Ladies Fashion','Shoes'),
+(1461,'Debit Card','magusnet@icloud.com', 'Indigo Diva Top', 17, '2020-07-12','2020-07-15','road',20,4522,124, 'Maggie','Aster','Chicago','Ladies Fashion', 'Tops'),
+(1462,'Debit Card','hillct@verizon.net','Carson Hitops',18,'2020-07-12','2020-07-15','road',31,1299,129,'Carrie','Hill','Seattle','Mens Fashion','Shoes'),
+(1463,'Credit Card','dunstan@att.net','Grey Crew Neck Top',19,'2020-07-13','2020-07-16','road',15,3111,125,'Dustan','Bet','Boston','Mens Fashion','Tops'),
+(1464,'Credit Card','psharpe@mac.com','Stripe Red Button Shirt',20,'2020-07-13','2020-07-16','rail',18,2312,130,'Phillip','Sharpe','Los Angeles','Mens Fashion','Tops'),
+(1465,'Cash on Delivery','rsmartin@hotmail.com','Indigo Diva Top',21,'2020-07-13','2020-07-16','road',20,3772,124,'Ricky','Martin','Portland','Ladies Fashion','Tops'),
+(1466,'Debit Card','jee@gmail.com','Dusty Blue Mini Dress',22,'2020-07-13','2020-07-16','air',21,3451,131,'Jee','Dana','New York','Ladies Fashion','Tops')
+
+-- Create Tables to Normalize Table and Increase Performance
+
+create table shopfast_shipping
+(
+shipping_id int,
+shipped_date date,
+shipping_method varchar(50)
+)
+
+create table shopfast_order
+(
+order_id int,
+payment_Description varchar(50),
+order_date date,
+sale_price int,
+shipping_id int,
+product_id int,
+customer_id int
+)
+
+create table shopfast_product
+(
+product_id int,
+product_name varchar(50),
+product_sub_Category(50),
+product_category(50)
+)
+
+create table shopfast_cutomer
+(
+customer_id int,
+cutomer_name varchar(50),
+cutomer_surname varchar(50),
+customer_city varchar(50),
+customer_email varchar(50)
+)
+
+--Insert Data to sub-tables from master table
+
+Insert into shopfast_shipping
+select shipping_id,shipped_date,shipping_method
+from shopfast
+
+Insert into shopfast_order
+select order_id,payment_description,order_date,sale_price, shipping_id,product_id,customer_id 
+from shopfast
+
+Insert into shopfast_product
+select product_id,product_name,product_sub_Category,product_category
+from shopfast
+
+insert into shopfast_customer
+select customer_id,customer_name,customer_Surname,customer_city,customer_email
+from shopfast
+
